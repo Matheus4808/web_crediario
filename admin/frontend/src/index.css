@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ideal Modas Admin Dashboard - Design System */
+
+@layer base {
+  :root {
+    /* Core brand colors */
+    --background: 0 0% 98%;
+    --foreground: 220 13% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 18%;
+
+    /* Primary - Ideal Modas Green #00DD00 */
+    --primary: 120 100% 43%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Light gray */
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 13% 18%;
+
+    /* Muted - Soft gray */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Accent */
+    --accent: 120 100% 96%;
+    --accent-foreground: 120 100% 25%;
+
+    /* Status colors */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 100%;
+    
+    --success: 120 100% 43%;
+    --success-foreground: 0 0% 100%;
+    
+    --pending: 220 9% 46%;
+    --pending-foreground: 0 0% 100%;
+
+    /* UI elements */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 120 100% 43%;
+
+    --radius: 0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: 220 13% 18%;
+    --sidebar-foreground: 220 14% 96%;
+    --sidebar-primary: 120 100% 43%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 13% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 13% 25%;
+    --sidebar-ring: 120 100% 43%;
+
+    /* Custom shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 13% 18% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 13% 18% / 0.1), 0 2px 4px -2px hsl(220 13% 18% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(220 13% 18% / 0.1), 0 4px 6px -4px hsl(220 13% 18% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(220 13% 18% / 0.1), 0 8px 10px -6px hsl(220 13% 18% / 0.1);
+    --shadow-card-hover: 0 20px 40px -10px hsl(120 100% 43% / 0.15);
+  }
+
+  .dark {
+    --background: 220 13% 10%;
+    --foreground: 220 14% 96%;
+    --card: 220 13% 14%;
+    --card-foreground: 220 14% 96%;
+    --popover: 220 13% 14%;
+    --popover-foreground: 220 14% 96%;
+    --primary: 120 100% 43%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 13% 20%;
+    --secondary-foreground: 220 14% 96%;
+    --muted: 220 13% 20%;
+    --muted-foreground: 220 9% 60%;
+    --accent: 120 100% 20%;
+    --accent-foreground: 120 100% 70%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 25%;
+    --input: 220 13% 25%;
+    --ring: 120 100% 43%;
+    --sidebar-background: 220 13% 8%;
+    --sidebar-foreground: 220 14% 96%;
+    --sidebar-primary: 120 100% 43%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 13% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 13% 20%;
+    --sidebar-ring: 120 100% 43%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .card-hover:hover {
+    @apply -translate-y-1;
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Status badges */
+  .badge-pending {
+    @apply bg-muted text-muted-foreground;
+  }
+  
+  .badge-approved {
+    @apply bg-accent text-accent-foreground;
+  }
+  
+  .badge-rejected {
+    @apply bg-destructive/10 text-destructive;
+  }
+
+  /* Modal backdrop */
+  .modal-backdrop {
+    @apply fixed inset-0 bg-foreground/60 backdrop-blur-sm;
+  }
+
+  /* Smooth animations */
+  .animate-in-modal {
+    animation: modal-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Staggered animation */
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.1s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.2s; }
+  .stagger-5 { animation-delay: 0.25s; }
+  .stagger-6 { animation-delay: 0.3s; }
+}
