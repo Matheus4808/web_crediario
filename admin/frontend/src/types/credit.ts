@@ -14,6 +14,7 @@ export interface CreditApplication {
   cep: string;
   city: string;
   address: string;
+  country?: string;
   salary: string;
   status: CreditStatus;
   createdAt: string;

@@ -8,11 +8,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { toast } from '@/hooks/use-toast';
 
 // Credenciais mock para demonstração
-const MOCK_CREDENTIALS = {
-  email: 'admin@idealmodas.com',
-  password: '123456',
-};
-
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -24,29 +19,45 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simula delay de autenticação
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-    if (email === MOCK_CREDENTIALS.email && password === MOCK_CREDENTIALS.password) {
-      // Salva estado de autenticação
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Erro ao autenticar');
+      }
+
+      // Salva token e dados do usuário
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('filial', data.filial.toString());
+      localStorage.setItem('email', data.email);
       localStorage.setItem('isAuthenticated', 'true');
 
       toast({
         title: 'Login realizado com sucesso!',
-        description: 'Bem-vindo ao painel administrativo.',
+        description: `Filial ${data.filial} autenticada`
       });
 
       navigate('/painel');
-    } else {
-      toast({
-        title: 'Credenciais inválidas',
-        description: 'Verifique seu e-mail e senha.',
-        variant: 'destructive',
-      });
-    }
 
-    setIsLoading(false);
+    } catch (error: any) {
+      toast({
+        title: 'Erro no login',
+        description: error.message,
+        variant: 'destructive'
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/40 to-background p-4">
@@ -140,10 +151,10 @@ const Login = () => {
             {/* Credenciais de demonstração */}
             <div className="rounded-lg border border-border/60 bg-muted/40 p-4">
               <p className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
-                Acesso de demonstração
+                Esqueceu a senha? ligue para o suporte!
               </p>
 
-              <div className="space-y-1 text-sm">
+              {/* <div className="space-y-1 text-sm">
                 <p>
                   <span className="text-muted-foreground">E-mail:</span>{" "}
                   <code className="bg-background px-2 py-0.5 rounded text-primary">
@@ -156,7 +167,7 @@ const Login = () => {
                     123456
                   </code>
                 </p>
-              </div>
+              </div> */}
             </div>
           </CardContent>
         </Card>
